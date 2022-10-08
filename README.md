@@ -1,5 +1,4 @@
 # log-agent 
-***
 ## 环境
 jdk1.8、maven3.8.4
 
@@ -9,12 +8,23 @@ jdk1.8、maven3.8.4
 ## 运行测试
 1. 进入log-agent目录（有pom文件的那个）
 2. 运行mvn clean install
-3. 构建成功后生成文件.\target\log-agent-0.1.0-jar-with-dependencies.jar 
+3. 构建成功后在本地maven库目录下生成文件log-agent-0.1.0-jar-with-dependencies.jar 
 
-4. 在log-agent-demo工程启动时增加jvm启动参数：--javaagent:D:\repository\com\fine\log-agent\0.1.0\log-agent-0.1.0-jar-with-dependencies.jar
-5. 启动
-6. 请求：curl --location --request POST 'localhost:8080/hi' --header 'accessID: 112233445566' --form 'name="anna"'
+4. 在log-agent-demo工程启动时增加jvm启动参数：
+<table><tr><td bgcolor=DarkSeaGreen>
+-javaagent:本地maven库目录\repository\com\fine\log-agent\0.1.0\log-agent-0.1.0-jar-with-dependencies.jar
+</td></tr></table>
+5. 启动log-agent-demo工程
+6. 请求：
+<table><tr><td bgcolor=DarkSeaGreen>
+curl --location --request POST 'localhost:8080/hi' --header 'accessID: 112233445566' --form 'name="anna"'
+</td></tr></table>
 7. 后台输出日志：
-![运行日志](./img/demoLog.png)
+<table><tr><td bgcolor=DarkSeaGreen>
+2022-10-08 19:42:27,195 INFO (LogAgent.java:168)-<font color=blue> [112233445566] [http://localhost:8080/hi] [] [SERVICE] [com.fine.example.log.service.SimpleService] [whatYouSay] [[]] [I am the guy with a song on my lips and love in my heart] [-]</font>
+
+2022-10-08 19:42:27,196 INFO (LogAgent.java:168)-<font color=blue> [112233445566] [http://localhost:8080/hi] [] [ACCESS] [com.fine.example.log.controller.SimpleController] [hi] [[anna]] [Hi anna! I am the guy with a song on my lips and love in my heart] [-]</font>
+2022-10-08 19:42:27,198 INFO (LogAgent.java:168)-<font color=blue> [112233445566] [http://localhost:8080/hi] [] [HTTP] [javax.servlet.http.HttpServlet] [service] [[[Ljava.lang.String;@419acbfe]] [null] [-]</font>
+</td></tr></table>
 
 

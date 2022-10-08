@@ -4,7 +4,7 @@
     <!--控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d %p (%file:%line\)- %X{rID} %X{rURL} %X{rHeader} %X{lType} %X{cName} %X{mName} %X{mArgs} %X{mRet} %m%n</pattern>
+            <pattern>%d %p (%file:%line\)- [%X{rID}] [%X{rURL}] [%X{rHeader}] [%X{lType}] [%X{cName}] [%X{mName}] [%X{mArgs}] [%X{mRet}] [%m]%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
