@@ -6,7 +6,7 @@ jdk1.8、maven3.8.4、IntelliJ IDEA(Community Edition)
 * log-agent-demo：使用log-agent组件的demo工程，基于spring boot实现的WEB工程，用于测试log-agent组件的日志打印。SimpleController.java内实现GET、POST和调用三方服务（透传）的请求。
 ## 运行测试
 1. 进入log-agent目录（有pom文件的那个）
-2. 运行`mvn clean install</code>`
+2. 运行`mvn clean install`
 3. 构建成功后在本地maven库目录下生成文件log-agent-0.1.0-jar-with-dependencies.jar 
 4. 在log-agent-demo工程启动时增加jvm启动参数：
 `-javaagent:本地maven库目录\repository\com\fine\log-agent\0.1.0\log-agent-0.1.0-jar-with-dependencies.jar`
