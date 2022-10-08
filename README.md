@@ -11,7 +11,7 @@ jdk1.8、maven3.8.4、IntelliJ IDEA(Community Edition)
 4. 在log-agent-demo工程启动时增加jvm启动参数：
 `-javaagent:本地maven库目录\repository\com\fine\log-agent\0.1.0\log-agent-0.1.0-jar-with-dependencies.jar`
 5. 启动log-agent-demo工程
-6. 请求：
+6. 请求：  
 `curl --location --request POST 'localhost:8080/hi' --header 'accessID: 112233445566' --form 'name="anna"'`
 7. 后台输出日志：
 ~~~
