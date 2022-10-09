@@ -12,7 +12,7 @@ jdk1.8、maven3.8.4、IntelliJ IDEA(Community Edition)
 `-javaagent:本地maven库目录\repository\com\fine\log-agent\0.1.0\log-agent-0.1.0-jar-with-dependencies.jar`
 5. 启动log-agent-demo工程
 6. 请求：  
-`curl --location --request POST 'localhost:8080/hi' --header 'accessID: 112233445566' --form 'name="anna"'`
+`curl --location --request POST 'localhost:8080/hi' --header 'traceID: 112233445566' --form 'name="anna"'`
 7. 后台输出日志：
 ~~~
 2022-10-09 18:18:30,401 INFO - [SERVICE] [112233445566] [0] [com.fine.example.log.service.SimpleService] [whatYouSay] [[]] [I am the guy with a song on my lips and love in my heart] [] [] [-]
