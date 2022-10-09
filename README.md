@@ -15,9 +15,9 @@ jdk1.8、maven3.8.4、IntelliJ IDEA(Community Edition)
 `curl --location --request POST 'localhost:8080/hi' --header 'accessID: 112233445566' --form 'name="anna"'`
 7. 后台输出日志：
 ~~~
-  2022-10-08 19:42:27,195 INFO (LogAgent.java:168)- [112233445566] [http://localhost:8080/hi] [] [SERVICE] [com.fine.example.log.service.SimpleService] [whatYouSay] [[]] [I am the guy with a song on my lips and love in my heart] [-]
-  2022-10-08 19:42:27,196 INFO (LogAgent.java:168)- [112233445566] [http://localhost:8080/hi] [] [ACCESS] [com.fine.example.log.controller.SimpleController] [hi] [[anna]] [Hi anna! I am the guy with a song on my lips and love in my heart] [-]
-  2022-10-08 19:42:27,198 INFO (LogAgent.java:168)- [112233445566] [http://localhost:8080/hi] [] [HTTP] [javax.servlet.http.HttpServlet] [service] [[[Ljava.lang.String;@419acbfe]] [null] [-]  
+2022-10-09 18:18:30,401 INFO - [SERVICE] [112233445566] [0] [com.fine.example.log.service.SimpleService] [whatYouSay] [[]] [I am the guy with a song on my lips and love in my heart] [] [] [-]
+2022-10-09 18:18:30,402 INFO - [ACCESS] [112233445566] [1] [com.fine.example.log.controller.SimpleController] [hi] [[anna]] [Hi anna! I am the guy with a song on my lips and love in my heart] [] [] [-]
+2022-10-09 18:18:30,423 INFO - [HTTP] [112233445566] [72] [javax.servlet.http.HttpServlet] [service] [[[[Ljava.lang.String;@32b2c2a7]]] [null] [http://localhost:8080/hi] [112233445566,3d2414da-c2a3-4163-a3b4-f385a28b0e5b,] [-]
 ~~~
 ## 联系方式
 javafine@163.com
