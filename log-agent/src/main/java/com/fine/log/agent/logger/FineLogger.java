@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: FanBo
@@ -26,6 +25,13 @@ public class FineLogger {
     public static final String LOG_THIRD_HEADER = "tHeader";
     public static final Map<String, String> mapLogType=new HashMap<String, String>();
 
+    public static final String TRACE_ID = "trace-id";
+    public static final Set<String> HEADER_EXCLUDE = new HashSet<String>(Arrays.asList(TRACE_ID, "content-type", "content-length", "host", "user-agent", "accept", "accept-encoding", "connection"));
+
+    public static String getMDC(String key) {
+        return MDC.get(key);
+    }
+
     public static void putMDC(String key, String value){
         MDC.put(key, value);
     }
@@ -39,7 +45,7 @@ public class FineLogger {
     }
 
     public enum LogType {
-        HTTP,ACCESS,SERVICE,THIRD,DEFAULT;
+        HTTP,ACCESS,SERVICE,THIRD,DEFAULT
     }
 
     public static void info(){
