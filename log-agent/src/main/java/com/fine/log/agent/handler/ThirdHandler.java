@@ -39,10 +39,12 @@ public class ThirdHandler {
     public static class ThirdInterceptor {
         @RuntimeType
         public static Object intercept(@SuperCall Callable<?> zuper, @Origin Method method, @Argument(0) HttpHost target, @Argument(1) HttpRequest request) throws Exception {
+            request.addHeader(FineLogger.TRACE_ID, FineLogger.getMDC(FineLogger.LOG_TRACE_ID));
+
             FineLogger.putMDC(FineLogger.LOG_THIRD_URL, target.toURI());
             StringBuilder sb = new StringBuilder();
             for (Header h : request.getAllHeaders()){
-                if (!HttpHandler.HEADER_EXCLUDE.contains(h.getName())){
+                if (!FineLogger.HEADER_EXCLUDE.contains(h.getName())){
                     sb.append(h.getValue()).append(",");
                 }
             }

@@ -21,12 +21,11 @@ import static net.bytebuddy.matcher.ElementMatchers.takesArgument;
  * @Date: Created in 11:15 2022/10/9
  */
 public class HttpHandler {
-    private static final String TRACE_ID = "traceID";
+
     private static final String HTTP_CLASS_NAME = "javax.servlet.http.HttpServlet";
     private static final String HTTP_METHOD_NAME = "service";
     private static final String HTTP_ARG_CLASS_NAME_0 = "javax.servlet.http.HttpServletRequest";
     private static final String HTTP_ARG_CLASS_NAME_1 = "javax.servlet.http.HttpServletResponse";
-    public static final Set<String> HEADER_EXCLUDE = new HashSet<String>(Arrays.asList(TRACE_ID, "content-type", "content-length", "host", "user-agent", "accept", "accept-encoding", "connection"));
 
     public static ElementMatcher httpMethodMatcher(){
         return named(HTTP_METHOD_NAME)
@@ -42,9 +41,9 @@ public class HttpHandler {
         @RuntimeType
         public static Object intercept(@SuperCall Callable<?> zuper, @Origin Method method, @Argument(0) HttpServletRequest req) throws Exception {
 //            System.out.println("--------------req agent "+req.getClass().getClassLoader().toString()+"|"+req.getClass().hashCode());
-            String tID = req.getHeader(TRACE_ID);
+            String tID = req.getHeader(FineLogger.TRACE_ID);
             if (tID==null || tID.isEmpty()){
-                tID = req.getParameter(TRACE_ID);
+                tID = req.getParameter(FineLogger.TRACE_ID);
             }
             FineLogger.putMDC(FineLogger.LOG_TRACE_ID, tID);
             Map<String, String> map = new HashMap<>();
@@ -52,7 +51,7 @@ public class HttpHandler {
             StringBuilder sb = new StringBuilder();
             for (Enumeration<String> e = req.getHeaderNames(); e.hasMoreElements();){
                 String name = e.nextElement();
-                if(!HEADER_EXCLUDE.contains(name)){
+                if(!FineLogger.HEADER_EXCLUDE.contains(name)){
                     sb.append(req.getHeader(name)).append(',');
                 }
             }
