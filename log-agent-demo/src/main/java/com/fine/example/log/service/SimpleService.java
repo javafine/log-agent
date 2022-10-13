@@ -18,7 +18,7 @@ package com.fine.example.log.service;
 import org.springframework.stereotype.Service;
 
 /**
- * @Author: FanBo
+ * @Author: javafine
  * @Description:
  * @Date: Created in 20:24 2022/9/23
  */
