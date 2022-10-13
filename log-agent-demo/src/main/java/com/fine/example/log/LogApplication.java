@@ -19,7 +19,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @Author: FanBo
+ * @Author: javafine
  * @Description:
  * @Date: Created in 19:38 2022/9/21
  */
