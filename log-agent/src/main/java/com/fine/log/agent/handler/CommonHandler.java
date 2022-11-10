@@ -8,6 +8,7 @@ import net.bytebuddy.matcher.ElementMatcher;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 
 import static net.bytebuddy.matcher.ElementMatchers.nameStartsWith;
@@ -42,16 +43,35 @@ public class CommonHandler {
 
         @IgnoreForBinding
         public static Object intercept(@SuperCall Callable<?> zuper, @Origin Method method, @AllArguments Object[] args, Map<String,String> map) throws Exception {
+            boolean startHere = false;
+            String type = FineLogger.mapLogType.get(method.getDeclaringClass().getName());
+
+            String mtID = FineLogger.getMDC(FineLogger.LOG_TRACE_ID);
+            if (mtID==null || mtID.isEmpty()){
+//                FineLogger.clear();
+                startHere = true;
+                mtID = UUID.randomUUID().toString();
+                FineLogger.putMDC(FineLogger.LOG_TRACE_ID, mtID);
+            }
+            String ntID = FineLogger.getNDC();
+            if (ntID==null || ntID.isEmpty()){
+//                FineLogger.clear();
+                ntID = UUID.randomUUID().toString();
+                FineLogger.putNDC(ntID);
+            }
             long start = System.currentTimeMillis();
             Object ret = null;
             ret = zuper.call();
-            FineLogger.putMDC(FineLogger.LOG_TYPE, FineLogger.mapLogType.get(method.getDeclaringClass().getName()));
+            FineLogger.putMDC(FineLogger.LOG_TYPE, type==null?"":type);
             FineLogger.putMDC(FineLogger.LOG_EXECUTE_TIME, Long.toString(System.currentTimeMillis()-start));
-            FineLogger.putMDC(FineLogger.LOG_CLASS_NAME, method.getDeclaringClass().getName());
+            FineLogger.putMDC(FineLogger.LOG_CLASS_NAME, method.getDeclaringClass().getSimpleName());
             FineLogger.putMDC(FineLogger.LOG_METHOD_NAME, method.getName());
             FineLogger.putMDC(FineLogger.LOG_METHOD_ARGS, Arrays.asList(args).toString());
             FineLogger.putMDC(FineLogger.LOG_METHOD_RET, String.valueOf(ret));
             FineLogger.info(map);
+            if(startHere){
+                FineLogger.clear();
+            }
             return ret;
         }
     }

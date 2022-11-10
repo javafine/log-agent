@@ -15,7 +15,15 @@
  */
 package com.fine.example.log.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @Author: javafine
@@ -25,7 +33,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SimpleService {
+    Logger log = LoggerFactory.getLogger(SimpleService.class);
+    @Autowired
+    private ReactiveMongoTemplate reactiveMongoTemplate;
+
+    public void save(){
+        Map<String, String> map = new HashMap<String, String>(){{put("Android","a"); put("iOS","i");}};
+        reactiveMongoTemplate.insert(map, "log-agent-test").subscribe(new Consumer(){
+
+            @Override
+            public void accept(Object o) {
+                log.info("result of mongo upsert : "+o);
+            }
+        });
+    }
+
     public String whatYouSay(){
+        try {
+            Thread.sleep(2000l);
+            save();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return "I am the guy with a song on my lips and love in my heart";
     }
 }

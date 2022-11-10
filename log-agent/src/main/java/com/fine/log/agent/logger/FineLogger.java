@@ -3,6 +3,7 @@ package com.fine.log.agent.logger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.apache.log4j.NDC;
 
 import java.util.*;
 
@@ -42,6 +43,27 @@ public class FineLogger {
                 putMDC(entry.getKey(), entry.getValue());
             }
         }
+    }
+
+    public static void putNDC(String traceID){
+        NDC.push(traceID);
+    }
+
+    public static String getNDC() {
+        return NDC.get();
+    }
+
+    public static void clear(){
+        MDC.clear();
+        NDC.remove();
+    }
+
+    public static void clearMDC(){
+        MDC.clear();
+    }
+
+    public static void clearNDC(){
+        NDC.remove();
     }
 
     public enum LogType {

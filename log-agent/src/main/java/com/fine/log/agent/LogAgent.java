@@ -54,6 +54,7 @@ public class LogAgent {
      * 打印请求的地址、headers、返回值等：{@link ThirdHandler.ThirdInterceptor#intercept(Callable, Method, HttpHost, HttpRequest)}。
      */
     public static void premain(String arg, Instrumentation instrumentation) {
+        System.out.println("----------------------------------log-agent v0.3 starting--------------------------------------");
         new AgentBuilder.Default()
 //                .with(AgentBuilder.Listener.StreamWriting.toSystemError())
                 .type(CommonHandler.domainClassMatcher().or(ThirdHandler.thirdClassMatcher()).or(HttpHandler.httpClassMatcher()))
@@ -71,9 +72,8 @@ public class LogAgent {
                                         .intercept(MethodDelegation.to(CommonHandler.CommonInterceptor.class));
                             } else if(ServiceHandler.serviceTypeMatcher().matches(annotation.getAnnotationType())){
                                 FineLogger.mapLogType.put(typeDescription.getName(), FineLogger.LogType.SERVICE.name());
-                                continue;
-                            } else {
-
+                                return builder.method(any())
+                                        .intercept(MethodDelegation.to(CommonHandler.CommonInterceptor.class));
                             }
                         }
                         if(ThirdHandler.thirdClassMatcher().matches(typeDescription)){
@@ -86,11 +86,11 @@ public class LogAgent {
                             return builder.method(HttpHandler.httpMethodMatcher())
                                     .intercept(MethodDelegation.to(HttpHandler.HttpInterceptor.class));
                         }
-                        return builder.method(any())
-                                .intercept(MethodDelegation.to(CommonHandler.CommonInterceptor.class));
+                        return null;
                     }
                 })
                 .installOn(instrumentation);
+        System.out.println("----------------------------------log-agent started--------------------------------------");
     }
 
     //未实现

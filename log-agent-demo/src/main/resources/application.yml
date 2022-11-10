@@ -1,0 +1,6 @@
+logging:
+  config: classpath:log4j.properties
+spring:
+  data.mongodb:
+    uri: mongodb://1.1.1.1:27017/name
+    fieldNamingStrategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy

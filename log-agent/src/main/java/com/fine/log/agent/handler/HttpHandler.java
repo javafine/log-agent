@@ -45,7 +45,12 @@ public class HttpHandler {
             if (tID==null || tID.isEmpty()){
                 tID = req.getParameter(FineLogger.TRACE_ID);
             }
+            if (tID==null || tID.isEmpty()){
+                tID = UUID.randomUUID().toString();
+            }
+            FineLogger.clear();
             FineLogger.putMDC(FineLogger.LOG_TRACE_ID, tID);
+            FineLogger.putNDC(tID);
             Map<String, String> map = new HashMap<>();
             map.put(FineLogger.LOG_REQUEST_URL, req.getRequestURL().toString());
             StringBuilder sb = new StringBuilder();

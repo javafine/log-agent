@@ -16,6 +16,7 @@
 package com.fine.example.log;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
@@ -27,7 +28,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LogApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LogApplication.class, args);
+//        SpringApplication.run(LogApplication.class, args);
+
+        SpringApplication app = new SpringApplication(LogApplication.class);
+        app.setWebApplicationType(WebApplicationType.REACTIVE);
+        app.run(args);
     }
 
 }
